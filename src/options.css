@@ -1,0 +1,17 @@
+.content {
+  padding: 50px;
+  max-width: 650px;
+}
+
+.mdl-textfield {
+  width: 100%;
+}
+
+.mdl-textfield textarea {
+  padding: 4px;
+  border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.mdl-dialog__title {
+  font-size: 1.5rem;
+}

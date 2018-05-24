@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>オプション - みんなよう見とる</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-color--grey-100">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--indigo-800">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">オプション - みんなよう見とる</span>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="content mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--grey-800">
+        <div class="mdl-cell mdl-cell--12-col">
+          <h3>登録名いちらん</h3>
+          <div id="name-list" class="mdl-textfield mdl-js-textfield mdl-color-text--grey-600">
+            <textarea class="mdl-textfield__input" type="text" rows="30"></textarea>
+          </div>
+        </div>
+
+        <button id="save" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+          ほぞん
+        </button>
+        <dialog class="mdl-dialog" id="result-dialog">
+          <h4 class="mdl-dialog__title">ほぞんしました</h4>
+          <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close">とじる</button>
+          </div>
+        </dialog>
+      </div>
+    </main>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
