@@ -1,8 +1,14 @@
 {
   "name": "みんなよう見とる",
   "version": "0.1",
-  "description": "設定したアカウントの発言を拾って通知",
+  "description": "YouTubeのチャットから設定したアカウントの発言を拾って通知",
   "permissions": ["storage", "notifications"],
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"],
