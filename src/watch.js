@@ -13,7 +13,7 @@ const checkComment = node => {
   if (node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer') return;
 
   const authorName = node.querySelector('#author-name').textContent;
-  if (nameList.some(value => value === authorName)) {
+  if (nameList.some(value => value === authorName.trim())) {
     const message = node.querySelector('#message').textContent;
     const iconUrl = node.querySelector('#img').getAttribute('src')
 
