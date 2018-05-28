@@ -9,3 +9,6 @@ https://chrome.google.com/webstore/detail/%E3%81%BF%E3%82%93%E3%81%AA%E3%82%88%E
 
 ## その他
 なにかあれば[Issue](https://github.com/clngn/vtuber-comment-extention/issues)まで。
+
+## License
+MIT
