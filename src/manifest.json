@@ -18,7 +18,7 @@
     {
       "run_at": "document_end",
       "all_frames": true,
-      "matches": ["https://*.youtube.com/live_chat*"],
+      "matches": ["https://*.youtube.com/live_chat*", "https://gaming.youtube.com/watch*"],
       "js": ["watch.js"]
     }
   ],

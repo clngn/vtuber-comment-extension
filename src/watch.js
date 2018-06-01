@@ -1,6 +1,14 @@
 let nameList = [];
 const storageKey = 'nameList';
 
+const askPermission = () => {
+  return new Promise(resolve => {
+    Notification.requestPermission(result => {
+      if (result === 'granted') resolve();
+    });
+  });
+};
+
 const getStorageData = key => {
   return new Promise(resolve => {
     chrome.storage.local.get(key, value => {
@@ -28,6 +36,8 @@ const checkComment = node => {
 };
 
 const init = async () => {
+  await askPermission();
+
   const storageData = await getStorageData(storageKey);
   nameList = storageData[storageKey];
 
@@ -36,8 +46,12 @@ const init = async () => {
       record.addedNodes.forEach(node => checkComment(node));
     });
   });
+
+  const host = window.location.host;
+  const chatSelector = host.match(/gaming/) ? 'yt-live-chat-renderer' : 'yt-live-chat-app';
+
   observer.observe(
-    document.querySelector('yt-live-chat-app'),
+    document.querySelector(chatSelector),
     {
       childList: true,
       subtree: true,
