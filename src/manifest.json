@@ -1,6 +1,6 @@
 {
   "name": "みんなよう見とる",
-  "version": "0.2",
+  "version": "0.3",
   "description": "YouTubeのチャットから設定したアカウントの発言を拾って通知",
   "permissions": ["storage", "notifications"],
   "icons": {
