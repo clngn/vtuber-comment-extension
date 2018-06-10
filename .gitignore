@@ -1,3 +1,5 @@
+yarn.lock
+package-lock.json
 src.crx
 src.pem
 webstore/*
