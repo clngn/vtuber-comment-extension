@@ -38,7 +38,7 @@ const checkComment = (node, ownerName) => {
   if (nameList.some(value => value === authorName.trim())) {
     const message = node.querySelector('#message').textContent
     const iconUrl = node.querySelector('#img').getAttribute('src')
-    const iconLargeUrl = iconUrl.replace(/\/photo.jpg/, "")
+    const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, "")
     const body = `${message}\n\nfrom ${ownerName}`
 
     new Notification(  // eslint-disable-line
