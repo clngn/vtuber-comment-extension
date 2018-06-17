@@ -1,14 +1,6 @@
 let nameList = []
 const storageKey = 'nameList'
 
-const askPermission = () => {
-  return new Promise(resolve => {
-    Notification.requestPermission(result => {
-      if (result === 'granted') resolve()
-    })
-  })
-}
-
 const getStorageData = key => {
   return new Promise(resolve => {
     chrome.storage.local.get(key, value => {
@@ -17,27 +9,30 @@ const getStorageData = key => {
   })
 }
 
-const checkComment = node => {
+const fetchBlobUrl = async url => {
+  const response = await fetch(url)
+  const blob = await response.blob()
+  return window.URL.createObjectURL(blob)
+}
+
+const checkComment = async node => {
   if (node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer') return
 
   const authorName = node.querySelector('#author-name').textContent
   if (nameList.some(value => value === authorName.trim())) {
-    const message = node.querySelector('#message').textContent
+    const liveTitle = parent.document.querySelector('#info .title').textContent
+    const message = `${node.querySelector('#message').textContent} / ${authorName}`
     const iconUrl = node.querySelector('#img').getAttribute('src')
 
-    new Notification(  // eslint-disable-line
-      authorName,
-      {
-        body: message,
-        icon: iconUrl
-      }
-    )
+    chrome.runtime.sendMessage({
+      name: liveTitle,
+      message,
+      iconUrl: await fetchBlobUrl(iconUrl)
+    }, response => {})
   }
 }
 
 const init = async () => {
-  await askPermission()
-
   const storageData = await getStorageData(storageKey)
   nameList = storageData[storageKey]
 

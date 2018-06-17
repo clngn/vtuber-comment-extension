@@ -18,10 +18,27 @@ const setStorageData = (key, value) => {
   })
 }
 
+const execNotification = request => {
+  const { name, message, iconUrl } = request
+  chrome.notifications.create(
+    {
+      type: 'basic',
+      title: name,
+      iconUrl,
+      message
+    },
+    id => {}
+  )
+}
+
 chrome.runtime.onInstalled.addListener(async () => {
   const storageData = await getStorageData(storageKey)
 
   if (Object.keys(storageData).length === 0) {
     await setStorageData(storageKey, [])
   }
+})
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  execNotification(message)
 })
