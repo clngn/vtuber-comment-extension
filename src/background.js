@@ -19,13 +19,14 @@ const setStorageData = (key, value) => {
 }
 
 const execNotification = request => {
-  const { name, message, iconUrl } = request
+  const { liveTitle, authorName, message, iconUrl } = request
   chrome.notifications.create(
     {
       type: 'basic',
-      title: name,
-      iconUrl,
-      message
+      title: authorName,
+      message,
+      contextMessage: liveTitle,
+      iconUrl
     },
     id => {}
   )

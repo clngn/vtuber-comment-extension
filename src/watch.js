@@ -21,13 +21,15 @@ const checkComment = async node => {
   const authorName = node.querySelector('#author-name').textContent
   if (nameList.some(value => value === authorName.trim())) {
     const liveTitle = parent.document.querySelector('#info .title').textContent
-    const message = `${node.querySelector('#message').textContent} / ${authorName}`
+    const message = node.querySelector('#message').textContent
     const iconUrl = node.querySelector('#img').getAttribute('src')
+    const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '')
 
     chrome.runtime.sendMessage({
-      name: liveTitle,
+      liveTitle,
+      authorName,
       message,
-      iconUrl: await fetchBlobUrl(iconUrl)
+      iconUrl: await fetchBlobUrl(iconLargeUrl)
     }, response => {})
   }
 }
