@@ -1,6 +1,18 @@
 let nameList = []
 const storageKey = 'nameList'
 
+const selectorList = {
+  youtube: {
+    chat: 'yt-live-chat-app',
+    liveTitle: '#info .title'
+  },
+  youtubeGaming: {
+    chat: 'yt-live-chat-renderer',
+    liveTitle: '#details #title .ytg-formatted-string'
+  }
+}
+const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube
+
 const getStorageData = key => {
   return new Promise(resolve => {
     chrome.storage.local.get(key, value => {
@@ -20,7 +32,7 @@ const checkComment = async node => {
 
   const authorName = node.querySelector('#author-name').textContent
   if (nameList.some(value => value === authorName.trim())) {
-    const liveTitle = parent.document.querySelector('#info .title').textContent
+    const liveTitle = parent.document.querySelector(selector.liveTitle).textContent
     const message = node.querySelector('#message').textContent
     const iconUrl = node.querySelector('#img').getAttribute('src')
     const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '')
@@ -44,11 +56,8 @@ const init = async () => {
     })
   })
 
-  const host = window.location.host
-  const chatSelector = host.match(/gaming/) ? 'yt-live-chat-renderer' : 'yt-live-chat-app'
-
   observer.observe(
-    document.querySelector(chatSelector),
+    document.querySelector(selector.chat),
     {
       childList: true,
       subtree: true
