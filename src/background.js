@@ -28,7 +28,7 @@ const execNotification = request => {
       contextMessage: liveTitle,
       iconUrl
     },
-    id => {}
+    () => {}
   )
 }
 
@@ -40,6 +40,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 })
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(message => {
   execNotification(message)
 })

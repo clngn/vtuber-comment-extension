@@ -42,7 +42,7 @@ const checkComment = async node => {
       authorName,
       message,
       iconUrl: await fetchBlobUrl(iconLargeUrl)
-    }, response => {})
+    }, () => {})
   }
 }
 
@@ -50,7 +50,7 @@ const init = async () => {
   const storageData = await getStorageData(storageKey)
   nameList = storageData[storageKey]
 
-  const observer = new MutationObserver((records, observer) => {
+  const observer = new MutationObserver(records => {
     records.forEach(record => {
       record.addedNodes.forEach(node => checkComment(node))
     })
