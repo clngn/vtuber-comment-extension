@@ -4,7 +4,19 @@ env:
 
 parser: babel-eslint
 
-extends: eslint:recommended
+plugins:
+  - prettier
+
+extends:
+  - eslint:recommended
+  - plugin:prettier/recommended
 
 globals:
   chrome: true
+
+rules:
+  prettier/prettier:
+    - error
+    - printWidth: 120
+      singleQuote: true
+      trailingComma: all
