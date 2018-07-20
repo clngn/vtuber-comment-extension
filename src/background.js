@@ -22,7 +22,7 @@ const setStorageData = (key, value) => {
 };
 
 const execNotification = request => {
-  const { liveTitle, authorName, message, iconUrl } = request;
+  const { liveTitle, authorName, message, iconUrl, ownerName, ownerIconUrl } = request;
   chrome.notifications.create(
     {
       type: 'basic',
@@ -30,6 +30,12 @@ const execNotification = request => {
       message,
       contextMessage: liveTitle,
       iconUrl,
+      buttons: [
+        {
+          title: ownerName,
+          iconUrl: ownerIconUrl,
+        }
+      ],
     },
     () => {},
   );

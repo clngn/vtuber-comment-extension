@@ -41,6 +41,8 @@ document.querySelector('#notification-test-button').addEventListener('click', ()
       authorName: 'みんなよう見とる',
       message: 'テストだよ',
       iconUrl: chrome.runtime.getURL('images/icon128.png'),
+      ownerName: 'テスト',
+      ownerIconUrl: chrome.runtime.getURL('images/icon128.png'),
     },
     () => {},
   );

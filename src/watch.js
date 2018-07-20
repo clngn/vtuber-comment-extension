@@ -5,13 +5,50 @@ const selectorList = {
   youtube: {
     chat: 'yt-live-chat-app',
     liveTitle: '#info .title',
+    ownerName: '#meta #owner-name .yt-simple-endpoint',
+    ownerIcon: '#meta #img',
   },
   youtubeGaming: {
     chat: 'yt-live-chat-renderer',
     liveTitle: '#details #title .ytg-formatted-string',
+    ownerName: '#owner > span',
+    ownerIcon: '#details #image',
   },
 };
-const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube;
+
+class YoutubeAccessor {
+  constructor(selectorList) {
+    this.selectorList = selectorList;
+  }
+
+  getChat(){
+    return document.querySelector(this.selectorList.chat);
+  }
+
+  getLiveTitle() {
+    return parent.document.querySelector(this.selectorList.liveTitle).textContent;
+  }
+
+  getOwnerName() {
+    return parent.document.querySelector(this.selectorList.ownerName).textContent;
+  }
+
+  getOwnerIcon() {
+    return parent.document.querySelector(this.selectorList.ownerIcon).getAttribute('src');
+  }
+}
+
+class YoutubeGamingAccessor extends YoutubeAccessor {
+  constructor(selectorList) {
+    super(selectorList);
+  }
+
+  getOwnerIcon(){
+    return parent.document.querySelector(this.selectorList.ownerIcon).style.backgroundImage.replace(/url\(("|')(.+)("|')\)/gi, '$2');
+  }
+}
+
+const accessor = window.location.host.match(/gaming/) ? new YoutubeGamingAccessor(selectorList.youtubeGaming) : new YoutubeAccessor(selectorList.youtube);
 
 const getStorageData = key => {
   return new Promise(resolve => {
@@ -34,10 +71,12 @@ const checkComment = async node => {
 
   const authorName = node.querySelector('#author-name').textContent;
   if (nameList.some(value => value === authorName.trim())) {
-    const liveTitle = parent.document.querySelector(selector.liveTitle).textContent;
+    const liveTitle = accessor.getLiveTitle();
     const message = node.querySelector('#message').textContent;
     const iconUrl = node.querySelector('#img').getAttribute('src');
     const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '');
+    const ownerName = accessor.getOwnerName();
+    const ownerIconUrl = accessor.getOwnerIcon();
 
     chrome.runtime.sendMessage(
       {
@@ -45,6 +84,8 @@ const checkComment = async node => {
         authorName,
         message,
         iconUrl: await fetchBlobUrl(iconLargeUrl),
+        ownerName,
+        ownerIconUrl: await fetchBlobUrl(ownerIconUrl),
       },
       () => {},
     );
@@ -61,7 +102,7 @@ const init = async () => {
     });
   });
 
-  observer.observe(document.querySelector(selector.chat), {
+  observer.observe(accessor.getChat(), {
     childList: true,
     subtree: true,
   });
