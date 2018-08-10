@@ -21,7 +21,7 @@ const setStorageData = (key, value) => {
   });
 };
 
-document.querySelector('#save').addEventListener('click', async () => {
+document.querySelector('#save-button').addEventListener('click', async () => {
   const inputData = document.querySelector('#name-list textArea').value;
   await setStorageData(storageKey, inputData.split('\n'));
   document.querySelector('#result-dialog').showModal();
@@ -29,6 +29,18 @@ document.querySelector('#save').addEventListener('click', async () => {
 
 document.querySelector('#result-dialog .close').addEventListener('click', () => {
   document.querySelector('dialog').close();
+});
+
+document.querySelector('#notification-test-button').addEventListener('click', () => {
+  chrome.runtime.sendMessage(
+    {
+      liveTitle: '通知テスト',
+      authorName: 'みんなよう見とる',
+      message: 'テストだよ',
+      iconUrl: chrome.runtime.getURL('images/icon128.png'),
+    },
+    () => {},
+  );
 });
 
 const init = async () => {
