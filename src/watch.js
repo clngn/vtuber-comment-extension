@@ -3,14 +3,20 @@ const storageKey = 'nameList';
 
 const selectorList = {
   youtube: {
-    chat: 'yt-live-chat-app',
-    liveTitle: '#info .title',
+    getChatDom: () => document.querySelector('yt-live-chat-app'),
+    getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
+    getOwnerName: () => parent.document.querySelector('#meta #owner-name .yt-simple-endpoint').textContent,
+    getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
   },
   youtubeGaming: {
-    chat: 'yt-live-chat-renderer',
-    liveTitle: '#details #title .ytg-formatted-string',
+    getChatDom: () => document.querySelector('yt-live-chat-renderer'),
+    getLiveTitle: () => parent.document.querySelector('#details #title .ytg-formatted-string').textContent,
+    getOwnerName: () => parent.document.querySelector('#owner > span').textContent,
+    getOwnerIconUrl: () =>
+      parent.document.querySelector('#details #image').style.backgroundImage.replace(/url\(("|')(.+)("|')\)/gi, '$2'),
   },
 };
+
 const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube;
 
 const getStorageData = key => {
@@ -34,10 +40,12 @@ const checkComment = async node => {
 
   const authorName = node.querySelector('#author-name').textContent;
   if (nameList.some(value => value === authorName.trim())) {
-    const liveTitle = parent.document.querySelector(selector.liveTitle).textContent;
+    const liveTitle = selector.getLiveTitle();
     const message = node.querySelector('#message').textContent;
     const iconUrl = node.querySelector('#img').getAttribute('src');
     const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '');
+    const ownerName = selector.getOwnerName();
+    const ownerIconUrl = selector.getOwnerIconUrl();
 
     chrome.runtime.sendMessage(
       {
@@ -45,6 +53,8 @@ const checkComment = async node => {
         authorName,
         message,
         iconUrl: await fetchBlobUrl(iconLargeUrl),
+        ownerName,
+        ownerIconUrl: await fetchBlobUrl(ownerIconUrl),
       },
       () => {},
     );
@@ -61,7 +71,7 @@ const init = async () => {
     });
   });
 
-  observer.observe(document.querySelector(selector.chat), {
+  observer.observe(selector.getChatDom(), {
     childList: true,
     subtree: true,
   });
