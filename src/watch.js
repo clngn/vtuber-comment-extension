@@ -3,52 +3,21 @@ const storageKey = 'nameList';
 
 const selectorList = {
   youtube: {
-    chat: 'yt-live-chat-app',
-    liveTitle: '#info .title',
-    ownerName: '#meta #owner-name .yt-simple-endpoint',
-    ownerIcon: '#meta #img',
+    getChatDom: () => document.querySelector('yt-live-chat-app'),
+    getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
+    getOwnerName: () => parent.document.querySelector('#meta #owner-name .yt-simple-endpoint').textContent,
+    getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
   },
   youtubeGaming: {
-    chat: 'yt-live-chat-renderer',
-    liveTitle: '#details #title .ytg-formatted-string',
-    ownerName: '#owner > span',
-    ownerIcon: '#details #image',
+    getChatDom: () => document.querySelector('yt-live-chat-renderer'),
+    getLiveTitle: () => parent.document.querySelector('#details #title .ytg-formatted-string').textContent,
+    getOwnerName: () => parent.document.querySelector('#owner > span').textContent,
+    getOwnerIconUrl: () =>
+      parent.document.querySelector('#details #image').style.backgroundImage.replace(/url\(("|')(.+)("|')\)/gi, '$2'),
   },
 };
 
-class YoutubeAccessor {
-  constructor(selectorList) {
-    this.selectorList = selectorList;
-  }
-
-  getChat(){
-    return document.querySelector(this.selectorList.chat);
-  }
-
-  getLiveTitle() {
-    return parent.document.querySelector(this.selectorList.liveTitle).textContent;
-  }
-
-  getOwnerName() {
-    return parent.document.querySelector(this.selectorList.ownerName).textContent;
-  }
-
-  getOwnerIcon() {
-    return parent.document.querySelector(this.selectorList.ownerIcon).getAttribute('src');
-  }
-}
-
-class YoutubeGamingAccessor extends YoutubeAccessor {
-  constructor(selectorList) {
-    super(selectorList);
-  }
-
-  getOwnerIcon(){
-    return parent.document.querySelector(this.selectorList.ownerIcon).style.backgroundImage.replace(/url\(("|')(.+)("|')\)/gi, '$2');
-  }
-}
-
-const accessor = window.location.host.match(/gaming/) ? new YoutubeGamingAccessor(selectorList.youtubeGaming) : new YoutubeAccessor(selectorList.youtube);
+const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube;
 
 const getStorageData = key => {
   return new Promise(resolve => {
@@ -71,12 +40,12 @@ const checkComment = async node => {
 
   const authorName = node.querySelector('#author-name').textContent;
   if (nameList.some(value => value === authorName.trim())) {
-    const liveTitle = accessor.getLiveTitle();
+    const liveTitle = selector.getLiveTitle();
     const message = node.querySelector('#message').textContent;
     const iconUrl = node.querySelector('#img').getAttribute('src');
     const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '');
-    const ownerName = accessor.getOwnerName();
-    const ownerIconUrl = accessor.getOwnerIcon();
+    const ownerName = selector.getOwnerName();
+    const ownerIconUrl = selector.getOwnerIconUrl();
 
     chrome.runtime.sendMessage(
       {
@@ -102,7 +71,7 @@ const init = async () => {
     });
   });
 
-  observer.observe(accessor.getChat(), {
+  observer.observe(selector.getChatDom(), {
     childList: true,
     subtree: true,
   });

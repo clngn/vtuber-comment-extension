@@ -34,7 +34,7 @@ const execNotification = request => {
         {
           title: ownerName,
           iconUrl: ownerIconUrl,
-        }
+        },
       ],
     },
     () => {},
