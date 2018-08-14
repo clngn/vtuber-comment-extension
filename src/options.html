@@ -24,9 +24,18 @@
           </div>
         </div>
 
-        <div class="button-area">
-          <button id="save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">ほぞん</button>
-          <button id="notification-test-button" class="mdl-button mdl-js-button mdl-button--raised">通知テスト</button>
+        <div class="button-area mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <button id="save-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">ほぞん</button>
+          </div>
+          <div class="mdl-cell mdl-cell--2-col"></div>
+          <div class="notification-test-area mdl-cell mdl-cell--4-col">
+            <button id="notification-test-button" class="mdl-button mdl-js-button mdl-button--raised">通知テスト</button>
+            <i id="notification-help" class="helptip mdl-color-text--blue-grey-400 material-icons">help</i>
+            <div class="mdl-tooltip" for="notification-help">
+              通知が表示されないときは<br>OSの通知設定を確認してみてね。
+            </div>
+          </div>
         </div>
 
         <dialog class="mdl-dialog" id="result-dialog">

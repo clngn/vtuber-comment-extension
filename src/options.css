@@ -18,8 +18,34 @@
 
 .button-area {
   width: 100%;
+  margin-top: -8px;
 }
 
-.button-area button {
-  margin-right: 10px;
+.notification-test-area {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.notification-test-area * {
+  margin-left: 10px;
+}
+
+.notification-test-area .helptip {
+  cursor: default;
+}
+
+.notification-test-area .mdl-tooltip {
+  margin-left: 0;
+  text-align: left;
+}
+
+.notification-test-area .mdl-tooltip:before {
+  content: "";
+  position: absolute;
+  left: 77px;
+  top: -7px;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid rgba(97,97,97,.9);;
+  border-left: 7px solid transparent;
 }
