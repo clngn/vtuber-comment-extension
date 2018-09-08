@@ -33,6 +33,23 @@ const fetchBlobUrl = async url => {
   return window.URL.createObjectURL(blob);
 };
 
+const getMessage = el => {
+  let messageString = '';
+
+  for (const child of el.childNodes) {
+    if (child.nodeType === Node.TEXT_NODE) {
+      messageString += child.wholeText;
+    }
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      if (child.nodeName.toLowerCase() === 'img' && typeof child.alt === 'string') {
+        messageString += child.alt;
+      }
+    }
+  }
+
+  return messageString;
+};
+
 const checkComment = async node => {
   if (node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer') {
     return;
@@ -41,7 +58,7 @@ const checkComment = async node => {
   const authorName = node.querySelector('#author-name').textContent;
   if (nameList.some(value => value === authorName.trim())) {
     const liveTitle = selector.getLiveTitle();
-    const message = node.querySelector('#message').textContent;
+    const message = getMessage(node.querySelector('#message'));
     const iconUrl = node.querySelector('#img').getAttribute('src');
     const iconLargeUrl = iconUrl.replace(/\/photo.jpg$/, '');
     const ownerName = selector.getOwnerName();
