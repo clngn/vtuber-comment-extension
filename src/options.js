@@ -1,25 +1,4 @@
-const storageKey = 'nameList';
-
-const getStorageData = key => {
-  return new Promise(resolve => {
-    chrome.storage.local.get(key, value => {
-      resolve(value);
-    });
-  });
-};
-
-const setStorageData = (key, value) => {
-  return new Promise(resolve => {
-    chrome.storage.local.set(
-      {
-        [key]: value,
-      },
-      () => {
-        resolve();
-      },
-    );
-  });
-};
+import { storageKey, getStorageData, setStorageData } from './modules/util';
 
 // Save Settings
 document.querySelector('#save-button').addEventListener('click', async () => {

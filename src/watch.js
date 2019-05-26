@@ -1,5 +1,6 @@
+import { storageKey, getStorageData } from './modules/util';
+
 let nameList = [];
-const storageKey = 'nameList';
 
 const selectorList = {
   youtube: {
@@ -18,14 +19,6 @@ const selectorList = {
 };
 
 const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube;
-
-const getStorageData = key => {
-  return new Promise(resolve => {
-    chrome.storage.local.get(key, value => {
-      resolve(value);
-    });
-  });
-};
 
 const fetchBlobUrl = async url => {
   const response = await fetch(url);
