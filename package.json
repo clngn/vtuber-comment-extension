@@ -9,7 +9,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "release": "zip -r webstore/extension.zip src/*"
+    "dev": "webextension-toolbox dev -s src chrome",
+    "release": "webextension-toolbox build -s src chrome"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
@@ -17,7 +18,8 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
     "husky": "^1.0.0-rc.13",
-    "prettier": "^1.13.7"
+    "prettier": "^1.13.7",
+    "webextension-toolbox": "^3.0.0"
   },
   "husky": {
     "hooks": {

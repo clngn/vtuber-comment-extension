@@ -4,3 +4,6 @@ src.crx
 src.pem
 webstore/*
 !webstore/.gitkeep
+node_modules/
+dist/
+packages/
