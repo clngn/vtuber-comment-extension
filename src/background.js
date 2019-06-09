@@ -36,17 +36,19 @@ const execNotification = async request => {
     contextMessage: liveTitle,
     iconUrl,
     buttons: [
-      {
-        title: ownerName,
-        iconUrl: ownerIconUrl,
-      },
+      (await isMac())
+        ? {
+            // Macのときは長すぎるメッセージを表示するためにボタンを使う
+            title: message,
+          }
+        : {
+            // Windowsのときは通知元のチャンネル情報を表示するためにボタンを使う
+            title: ownerName,
+            iconUrl: ownerIconUrl,
+          },
     ],
   };
-  if (await isMac()) {
-    option.buttons.push({
-      title: message,
-    });
-  }
+
   chrome.notifications.create(option, () => {});
 };
 
