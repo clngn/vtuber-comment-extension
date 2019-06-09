@@ -21,24 +21,35 @@ const setStorageData = (key, value) => {
   });
 };
 
-const execNotification = request => {
+const isMac = () => {
+  return new Promise(resolve => {
+    chrome.runtime.getPlatformInfo(info => resolve(info.os === 'mac'));
+  });
+};
+
+const execNotification = async request => {
   const { liveTitle, authorName, message, iconUrl, ownerName, ownerIconUrl } = request;
-  chrome.notifications.create(
-    {
-      type: 'basic',
-      title: authorName,
-      message,
-      contextMessage: liveTitle,
-      iconUrl,
-      buttons: [
-        {
-          title: ownerName,
-          iconUrl: ownerIconUrl,
-        },
-      ],
-    },
-    () => {},
-  );
+  const option = {
+    type: 'basic',
+    title: authorName,
+    message,
+    contextMessage: liveTitle,
+    iconUrl,
+    buttons: [
+      (await isMac())
+        ? {
+            // Macのときは長すぎるメッセージを表示するためにボタンを使う
+            title: message,
+          }
+        : {
+            // Windowsのときは通知元のチャンネル情報を表示するためにボタンを使う
+            title: ownerName,
+            iconUrl: ownerIconUrl,
+          },
+    ],
+  };
+
+  chrome.notifications.create(option, () => {});
 };
 
 chrome.runtime.onInstalled.addListener(async () => {
