@@ -58,8 +58,8 @@ const checkComment = async node => {
     return;
   }
 
-  const authorName = node.querySelector('#author-name').textContent;
-  if (nameList.some(value => value === authorName.trim())) {
+  const authorName = node.querySelector('#author-name').textContent.trim();
+  if (nameList.some(value => value === authorName)) {
     const liveTitle = selector.getLiveTitle();
     const message = getMessage(node.querySelector('#message'));
     const iconUrl = node.querySelector('#img').getAttribute('src');
