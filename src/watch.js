@@ -51,7 +51,10 @@ const getMessage = el => {
 };
 
 const checkComment = async node => {
-  if (node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer') {
+  if (
+    node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer' &&
+    node.nodeName.toLowerCase() !== 'yt-live-chat-paid-message-renderer'
+  ) {
     return;
   }
 
