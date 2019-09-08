@@ -5,7 +5,7 @@ const selectorList = {
   youtube: {
     getChatDom: () => document.querySelector('yt-live-chat-app'),
     getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
-    getOwnerName: () => parent.document.querySelector('#meta .ytd-channel-name .yt-simple-endpoint').textContent,
+    getOwnerName: () => parent.document.querySelector('#meta #channel-name .yt-simple-endpoint').textContent,
     getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
   },
   youtubeGaming: {
@@ -51,7 +51,10 @@ const getMessage = el => {
 };
 
 const checkComment = async node => {
-  if (node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer') {
+  if (
+    node.nodeName.toLowerCase() !== 'yt-live-chat-text-message-renderer' &&
+    node.nodeName.toLowerCase() !== 'yt-live-chat-paid-message-renderer'
+  ) {
     return;
   }
 
