@@ -1,23 +1,12 @@
 let nameList = [];
 const storageKey = 'nameList';
 
-const selectorList = {
-  youtube: {
-    getChatDom: () => document.querySelector('yt-live-chat-app'),
-    getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
-    getOwnerName: () => parent.document.querySelector('#meta #channel-name .yt-simple-endpoint').textContent,
-    getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
-  },
-  youtubeGaming: {
-    getChatDom: () => document.querySelector('yt-live-chat-renderer'),
-    getLiveTitle: () => parent.document.querySelector('#details #title .ytg-formatted-string').textContent,
-    getOwnerName: () => parent.document.querySelector('#owner > span').textContent,
-    getOwnerIconUrl: () =>
-      parent.document.querySelector('#details #image').style.backgroundImage.replace(/url\(("|')(.+)("|')\)/gi, '$2'),
-  },
+const selector = {
+  getChatDom: () => document.querySelector('yt-live-chat-app'),
+  getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
+  getOwnerName: () => parent.document.querySelector('#meta #channel-name .yt-simple-endpoint').textContent,
+  getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
 };
-
-const selector = window.location.host.match(/gaming/) ? selectorList.youtubeGaming : selectorList.youtube;
 
 const getStorageData = key => {
   return new Promise(resolve => {
