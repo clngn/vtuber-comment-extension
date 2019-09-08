@@ -5,7 +5,7 @@ const selectorList = {
   youtube: {
     getChatDom: () => document.querySelector('yt-live-chat-app'),
     getLiveTitle: () => parent.document.querySelector('#info .title').textContent,
-    getOwnerName: () => parent.document.querySelector('#meta #owner-name .yt-simple-endpoint').textContent,
+    getOwnerName: () => parent.document.querySelector('#meta #channel-name .yt-simple-endpoint').textContent,
     getOwnerIconUrl: () => parent.document.querySelector('#meta #img').getAttribute('src'),
   },
   youtubeGaming: {
