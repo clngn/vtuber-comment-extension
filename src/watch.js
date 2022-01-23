@@ -27,7 +27,7 @@ const getMessage = el => {
 
   for (const child of el.childNodes) {
     if (child.nodeType === Node.TEXT_NODE) {
-      messageString += child.wholeText;
+      messageString += child.textContent;
     }
     if (child.nodeType === Node.ELEMENT_NODE) {
       if (child.nodeName.toLowerCase() === 'img' && typeof child.alt === 'string') {
