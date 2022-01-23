@@ -48,6 +48,9 @@ const checkComment = async node => {
   }
 
   const authorName = node.querySelector('#author-name').textContent.trim();
+  if (!authorName) {
+    return;
+  }
   if (nameList.some(value => value === authorName)) {
     const liveTitle = selector.getLiveTitle();
     const message = getMessage(node.querySelector('#message'));
