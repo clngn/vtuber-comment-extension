@@ -11,8 +11,7 @@
   },
   "options_page": "options.html",
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
@@ -26,6 +25,8 @@
       "js": ["watch.js"]
     }
   ],
-  "content_security_policy": "script-src 'self' https://code.getmdl.io/; object-src 'self'",
-  "manifest_version": 2
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "manifest_version": 3
 }
