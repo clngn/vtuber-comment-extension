@@ -21,6 +21,11 @@
   margin-top: -8px;
 }
 
+.licence-area {
+  width: 100%;
+  text-align:right;
+}
+
 .notification-test-area {
   display: flex;
   justify-content: flex-end;
